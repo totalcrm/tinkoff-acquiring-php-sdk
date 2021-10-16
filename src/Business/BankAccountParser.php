@@ -1,8 +1,8 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Business;
+namespace TotalCRM\TinkoffAcquiring\Business;
 
-use Topvisor\TinkoffSdk\Core\Parser;
+use TotalCRM\TinkoffAcquiring\Core\Parser;
 
 class BankAccountParser implements Parser {
 

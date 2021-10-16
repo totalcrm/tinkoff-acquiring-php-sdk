@@ -1,6 +1,6 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Core;
+namespace TotalCRM\TinkoffAcquiring\Core;
 
 class ParsersChain implements Parser {
 

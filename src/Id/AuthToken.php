@@ -1,6 +1,6 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Id;
+namespace TotalCRM\TinkoffAcquiring\Id;
 
 class AuthToken {
 

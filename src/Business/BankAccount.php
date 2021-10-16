@@ -1,6 +1,6 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Business;
+namespace TotalCRM\TinkoffAcquiring\Business;
 
 class BankAccount {
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Business;
+namespace TotalCRM\TinkoffAcquiring\Business;
 
-use Topvisor\TinkoffSdk\Core\Http\Request;
-use Topvisor\TinkoffSdk\Core\Http\Response;
-use Topvisor\TinkoffSdk\Core\Middleware;
+use TotalCRM\TinkoffAcquiring\Core\Http\Request;
+use TotalCRM\TinkoffAcquiring\Core\Http\Response;
+use TotalCRM\TinkoffAcquiring\Core\Middleware;
 
 class ErrorThrower implements Middleware {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Core\Http;
+namespace TotalCRM\TinkoffAcquiring\Core\Http;
 
 class Headers {
 

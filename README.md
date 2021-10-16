@@ -16,8 +16,8 @@ composer require totalcrm/tinkoff-acquiring-php-sdk
 Для работы с api требуется авторизоваться в [Tinkoff Id](https://business.tinkoff.ru/openapi/docs#section/Avtorizaciya-v-Tinkoff-Id).
 
 ```php
-use Topvisor\TinkoffSdk\Id\AuthToken;
-use Topvisor\TinkoffSdk\Id\Session;
+use TotalCRM\TinkoffAcquiring\Id\AuthToken;
+use TotalCRM\TinkoffAcquiring\Id\Session;
 
 $accessToken = ''; // подставьте ваш access token
 $expired = (new DateTime('2022-01-01'))->getTimestamp();
@@ -37,7 +37,7 @@ $session = new Session($authToken); // используется для даль�
 Пример обработки ошибок
 
 ```php
-use Topvisor\TinkoffSdk\Business\Error;
+use TotalCRM\TinkoffAcquiring\Business\Error;
 
 try {
 	$data = $service->get();
@@ -60,7 +60,7 @@ try {
 #### Получить счета
 
 ```php
-use Topvisor\TinkoffSdk\Business\BankAccountsService;
+use TotalCRM\TinkoffAcquiring\Business\BankAccountsService;
 
 $bankAccountsService = new BankAccountsService($session);
 $bankAccounts = $bankAccountsService->get();
@@ -71,7 +71,7 @@ var_dump($bankAccounts);
 #### Получить выписку по счету
 
 ```php
-use Topvisor\TinkoffSdk\Business\BankStatementService;
+use TotalCRM\TinkoffAcquiring\Business\BankStatementService;
 
 $accountNumber = ''; // подставьте ваш номер счета
 $from = new DateTime('2021-01-01');

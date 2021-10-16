@@ -1,9 +1,9 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Core;
+namespace TotalCRM\TinkoffAcquiring\Core;
 
-use Topvisor\TinkoffSdk\Core\Http\Request;
-use Topvisor\TinkoffSdk\Core\Http\Response;
+use TotalCRM\TinkoffAcquiring\Core\Http\Request;
+use TotalCRM\TinkoffAcquiring\Core\Http\Response;
 
 interface Middleware {
 

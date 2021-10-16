@@ -1,14 +1,14 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Id;
+namespace TotalCRM\TinkoffAcquiring\Id;
 
-use Topvisor\TinkoffSdk\Core\Http\Client;
-use Topvisor\TinkoffSdk\Core\Http\Curl;
-use Topvisor\TinkoffSdk\Core\Http\Header;
-use Topvisor\TinkoffSdk\Core\Http\Request;
-use Topvisor\TinkoffSdk\Core\Http\Response;
-use Topvisor\TinkoffSdk\Core\Http\Ssl;
-use Topvisor\TinkoffSdk\Core\Middleware;
+use TotalCRM\TinkoffAcquiring\Core\Http\Client;
+use TotalCRM\TinkoffAcquiring\Core\Http\Curl;
+use TotalCRM\TinkoffAcquiring\Core\Http\Header;
+use TotalCRM\TinkoffAcquiring\Core\Http\Request;
+use TotalCRM\TinkoffAcquiring\Core\Http\Response;
+use TotalCRM\TinkoffAcquiring\Core\Http\Ssl;
+use TotalCRM\TinkoffAcquiring\Core\Middleware;
 
 class Session implements Middleware {
 

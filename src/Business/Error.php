@@ -1,9 +1,9 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Business;
+namespace TotalCRM\TinkoffAcquiring\Business;
 
-use Topvisor\TinkoffSdk\Core\Http\Response;
-use Topvisor\TinkoffSdk\Core\Service;
+use TotalCRM\TinkoffAcquiring\Core\Http\Response;
+use TotalCRM\TinkoffAcquiring\Core\Service;
 use Throwable;
 
 class Error extends \Exception {

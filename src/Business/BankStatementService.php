@@ -1,13 +1,13 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Business;
+namespace TotalCRM\TinkoffAcquiring\Business;
 
-use Topvisor\TinkoffSdk\Core\Http\Client;
-use Topvisor\TinkoffSdk\Core\Http\Request;
-use Topvisor\TinkoffSdk\Core\JsonParser;
-use Topvisor\TinkoffSdk\Core\ParsersChain;
-use Topvisor\TinkoffSdk\Core\Service;
-use Topvisor\TinkoffSdk\Id\Session;
+use TotalCRM\TinkoffAcquiring\Core\Http\Client;
+use TotalCRM\TinkoffAcquiring\Core\Http\Request;
+use TotalCRM\TinkoffAcquiring\Core\JsonParser;
+use TotalCRM\TinkoffAcquiring\Core\ParsersChain;
+use TotalCRM\TinkoffAcquiring\Core\Service;
+use TotalCRM\TinkoffAcquiring\Id\Session;
 
 class BankStatementService {
 

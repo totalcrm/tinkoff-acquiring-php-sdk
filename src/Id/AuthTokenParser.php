@@ -1,8 +1,8 @@
 <?php
 
-namespace Topvisor\TinkoffSdk\Id;
+namespace TotalCRM\TinkoffAcquiring\Id;
 
-use Topvisor\TinkoffSdk\Core\Parser;
+use TotalCRM\TinkoffAcquiring\Core\Parser;
 
 class AuthTokenParser implements Parser {
 
