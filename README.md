@@ -8,11 +8,7 @@ SDK для Tinkoff Api
 
 composer.json
 ```json
-{
-    "require": {
-        "topvisor/tinkoff-sdk-php": "~0.9"
-    }
-}
+composer require totalcrm/tinkoff-acquiring-php-sdk
 ```
 
 # Пример использования библиотеки
