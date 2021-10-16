@@ -1,6 +1,6 @@
 {
-	"name": "topvisor/tinkoff-sdk-php",
-	"description": "SDK для Tinkoff Api для Topvisor",
+	"name": "totalcrm/tinkoff-acquiring-php-sdk",
+	"description": "SDK для Tinkoff",
 	"keywords": ["PHP","Tinkoff"],
 	"license": "MIT",
 	"type": "libraryBankAccountParser",
