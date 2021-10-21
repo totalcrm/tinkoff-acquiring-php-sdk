@@ -1,0 +1,25 @@
+{
+	"name": "totalcrm/tinkoff-acquiring-php-sdk",
+	"description": "SDK PHP Tinkoff",
+	"keywords": ["PHP","Tinkoff"],
+	"license": "MIT",
+	"type": "libraryBankAccountParser",
+	"authors": [
+		{
+			"name": "totalcrm",
+			"email": "info@totalcrm.com"
+		}
+	],
+	"require": {
+		"php": "^7.4",
+		"ext-date": "*",
+		"ext-mbstring": "*",
+		"ext-curl": "*",
+		"ext-openssl": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"TotalCRM\\TinkoffAcquiring\\": "src/"
+		}
+	}
+}
