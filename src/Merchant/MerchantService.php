@@ -42,30 +42,40 @@ class MerchantService
         if (empty($api) || empty($params)) {
             return false;
         }
+        if (is_array($params)) {
+            $params = json_encode($params);
+        }
 
         if ($curl = curl_init()) {
             curl_setopt($curl, CURLOPT_URL, $api);
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
             curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
             curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen(http_build_query($params)),
+                'Content-Type: application/json'
             ));
 
-            $response = curl_exec($curl);
+            $httpResponse = curl_exec($curl);
             $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
             curl_close($curl);
 
-            if (!empty($response) && $httpCode === 200) {
-                $response = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+            if (!empty($httpResponse) && $httpCode === 200) {
+                $response = json_decode($httpResponse, true, 512, JSON_THROW_ON_ERROR);
+            } else {
+                $response = null;
             }
 
             $this->response = $response;
 
-            return array($response, $httpCode);
+            return [
+                'httpResponse' => $httpResponse,
+                'httpCode' => $httpCode,
+                'response' => $response,
+                'params' => $params,
+            ];
         }
 
         return false;
@@ -76,7 +86,7 @@ class MerchantService
      */
     public function getRedirectURL()
     {
-        if (!empty($this->response) && !isset($this->response['PaymentURL'])) {
+        if (!empty($this->response) && isset($this->response['PaymentURL'])) {
             return $this->response['PaymentURL'];
         }
 
@@ -183,9 +193,8 @@ class MerchantService
         }
 
         if (isset($params['TerminalKey'], $params['Amount'], $params['OrderId'], $params['DATA'], $params['Receipt'])) {
-            /** @var array $data */
-            $data = json_encode($params, JSON_THROW_ON_ERROR);
-            return $this->sendRequest(self::INIT_URL, $data);
+
+            return $this->sendRequest(self::INIT_URL, $params);
         }
 
         return false;
@@ -242,8 +251,8 @@ class MerchantService
             $this->order['Receipt']['Items'] = array();
         }
 
-        $params['Amount'] = $data['Price'] * $data['Quantity'];
-        $this->order['Receipt']['Items'][] = (object)$params;
+        $data['Amount'] = (int)($data['Price'] * $data['Quantity']);
+        $this->order['Receipt']['Items'][] = (object)$data;
 
         $this->calcAmount();
     }
@@ -259,7 +268,7 @@ class MerchantService
         if (is_array($this->order['Receipt']['Items'])) {
             foreach ($this->order['Receipt']['Items'] as $k => $item) {
                 if (isset($item->Amount)) {
-                    $amount += $item->Amount;
+                    $amount += (int)$item->Amount;
                 }
             }
         }
@@ -267,7 +276,7 @@ class MerchantService
         if (!isset($this->order['Amount'])) {
             $this->order = array('Amount' => $amount) + $this->order;
         } else {
-            $this->order['Amount'] = $amount;
+            $this->order['Amount'] = (int)$amount;
         }
     }
 
