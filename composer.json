@@ -1,21 +1,31 @@
 {
 	"name": "totalcrm/tinkoff-acquiring-php-sdk",
-	"description": "SDK PHP Tinkoff",
-	"keywords": ["PHP","Tinkoff"],
+	"type": "library",
+	"description": "Tinkoff Acquiring SDK PHP by TotalCRM",
+	"keywords": ["TotalCRM", "PHP", "Tinkoff"],
+	"homepage": "https://totalcrm.ru",
 	"license": "MIT",
-	"type": "libraryBankAccountParser",
 	"authors": [
 		{
-			"name": "totalcrm",
+			"name": "Aleksandr Romanenko",
+			"email": "romanenko.a@bk.ru"
+		},
+		{
+			"name": "TotalCRM",
 			"email": "info@totalcrm.com"
+		},
+		{
+			"name": "decaseal",
+			"email": "decaseal@gmail.com"
 		}
 	],
 	"require": {
-		"php": "^7.4",
+		"php": ">=7.4.3",
 		"ext-date": "*",
 		"ext-mbstring": "*",
 		"ext-curl": "*",
-		"ext-openssl": "*"
+		"ext-openssl": "*",
+		"ext-json": "*"
 	},
 	"autoload": {
 		"psr-4": {

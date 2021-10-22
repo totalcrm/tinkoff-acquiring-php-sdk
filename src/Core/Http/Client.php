@@ -2,8 +2,11 @@
 
 namespace TotalCRM\TinkoffAcquiring\Core\Http;
 
-interface Client {
-
-	function send(Request $req): Response;
-
+interface Client
+{
+    /**
+     * @param Request $req
+     * @return Response
+     */
+    public function send(Request $req): Response;
 }

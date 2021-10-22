@@ -2,32 +2,47 @@
 
 namespace TotalCRM\TinkoffAcquiring\Core\Http;
 
-class HeadersParser {
+use Exception;
 
-	private static ?self $instance = NULL;
+class HeadersParser
+{
 
-	private function __construct() {}
+    private static ?self $instance = null;
 
-	public static function instance(): self {
-		if (!self::$instance)
-			self::$instance = new self();
+    private function __construct()
+    {
+    }
 
-		return self::$instance;
-	}
+    public static function instance(): self
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
 
-	public function parse(string $headersRaw): Headers {
-		$headersRaw = trim($headersRaw);
-		$headersRaw = explode("\r\n", $headersRaw);
+        return self::$instance;
+    }
 
-		if (strpos($headersRaw[0], "HTTP/") === 0)
-			array_shift($headersRaw);
+    /**
+     * @param string|null $headersRaw
+     * @return Headers
+     * @throws Exception
+     */
+    public function parse(?string $headersRaw = ''): Headers
+    {
+        $headersRaw = trim($headersRaw);
+        $headersRaw = explode("\r\n", $headersRaw);
 
-		$headers = new Headers();
+        if (strpos($headersRaw[0], "HTTP/") === 0) {
+            array_shift($headersRaw);
+        }
 
-		foreach ($headersRaw as $headerRaw)
-			$headers->add(HeaderParser::instance()->parse($headerRaw));
+        $headers = new Headers();
 
-		return $headers;
-	}
+        foreach ($headersRaw as $headerRaw) {
+            $headers->add(HeaderParser::instance()->parse($headerRaw));
+        }
+
+        return $headers;
+    }
 
 }

@@ -2,24 +2,38 @@
 
 namespace TotalCRM\TinkoffAcquiring\Core;
 
-class ParsersChain implements Parser {
+class ParsersChain implements Parser
+{
 
-	private array $parsers;
+    private array $parsers;
 
-	public function __construct(Parser ...$parsers) {
-		$this->parsers = $parsers;
-	}
+    /**
+     * ParsersChain constructor.
+     * @param Parser ...$parsers
+     */
+    public function __construct(Parser ...$parsers)
+    {
+        $this->parsers = $parsers;
+    }
 
-	public function __destruct(){
-		for ($i = 0; $i < count($this->parsers); $i++)
-			unset($this->parsers[$i]);
-	}
+    public function __destruct()
+    {
+        foreach ($this->parsers as $key => $value) {
+            unset($this->parsers[$key]);
+        }
+    }
 
-	public function parse($raw) {
-		foreach ($this->parsers as $parser)
-			$raw = $parser->parse($raw);
+    /**
+     * @param $raw
+     * @return mixed
+     */
+    public function parse($raw)
+    {
+        foreach ($this->parsers as $parser) {
+            $raw = $parser->parse($raw);
+        }
 
-		return $raw;
-	}
+        return $raw;
+    }
 
 }

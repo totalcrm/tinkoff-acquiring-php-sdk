@@ -2,62 +2,82 @@
 
 namespace TotalCRM\TinkoffAcquiring\Core\Http;
 
-class Curl implements Client {
+use Exception;
+use RuntimeException;
 
-	private $handle = NULL;
-	private array $options = [CURLOPT_TIMEOUT => 10];
+class Curl implements Client
+{
 
-	public function __construct(array $options = []) {
-		foreach ($options as $key => $val) {
-			$this->options[$key] = $val;
-		}
-	}
+    private $handle;
+    private array $options = [CURLOPT_TIMEOUT => 10];
 
-	public function __destruct() {
-		$this->close();
-	}
+    /**
+     * Curl constructor.
+     * @param array $options
+     */
+    public function __construct(array $options = [])
+    {
+        foreach ($options as $key => $val) {
+            $this->options[$key] = $val;
+        }
+    }
 
-	public function send(Request $req): Response {
-		$options = $this->options;
-		$options[CURLOPT_URL] = $req->url;
-		$options[CURLOPT_HTTPHEADER] = $req->headers->getAllStrings();
-		$options[CURLOPT_CUSTOMREQUEST] = $req->method;
-		$options[CURLOPT_POSTFIELDS] = $req->body;
-		$options[CURLOPT_RETURNTRANSFER] = true;
-		$options[CURLOPT_HEADER] = true;
+    public function __destruct()
+    {
+        $this->close();
+    }
 
-		if ($req->ssl) {
-			$options[CURLOPT_SSLCERT] = $req->ssl->certPath;
-			$options[CURLOPT_SSLKEY] = $req->ssl->keyPath;
+    /**
+     * @param Request $req
+     * @return Response
+     * @throws Exception
+     */
+    public function send(Request $req): Response
+    {
+        $options = $this->options;
+        $options[CURLOPT_URL] = $req->url;
+        $options[CURLOPT_HTTPHEADER] = $req->headers->getAllStrings();
+        $options[CURLOPT_CUSTOMREQUEST] = $req->method;
+        $options[CURLOPT_POSTFIELDS] = $req->body;
+        $options[CURLOPT_RETURNTRANSFER] = true;
+        $options[CURLOPT_HEADER] = true;
 
-			if ($req->ssl->keyPasswd)
-				$options[CURLOPT_SSLKEYPASSWD] = $req->ssl->keyPasswd;
-		}
+        if ($req->ssl) {
+            $options[CURLOPT_SSLCERT] = $req->ssl->certPath;
+            $options[CURLOPT_SSLKEY] = $req->ssl->keyPath;
 
-		if (!$this->handle)
-			$this->handle = curl_init();
+            if ($req->ssl->keyPasswd) {
+                $options[CURLOPT_SSLKEYPASSWD] = $req->ssl->keyPasswd;
+            }
+        }
 
-		curl_setopt_array($this->handle, $options);
-		$respRaw = curl_exec($this->handle);
+        if (!$this->handle) {
+            $this->handle = curl_init();
+        }
 
-		if ($errorCode = curl_errno($this->handle))
-			throw new \Exception("curl: ($errorCode) " . curl_error($this->handle), $errorCode);
+        curl_setopt_array($this->handle, $options);
+        $respRaw = curl_exec($this->handle);
 
-		list ($headersRaw, $body) = explode("\r\n\r\n", $respRaw, 2);
+        if ($errorCode = curl_errno($this->handle)) {
+            throw new RuntimeException("curl: ($errorCode) " . curl_error($this->handle), $errorCode);
+        }
 
-		$resp = new Response();
-		$resp->code = (int) curl_getinfo($this->handle, CURLINFO_RESPONSE_CODE);
-		$resp->headers = HeadersParser::instance()->parse($headersRaw);
-		$resp->body = $body;
+        [$headersRaw, $body] = explode("\r\n\r\n", $respRaw, 2);
 
-		return $resp;
-	}
+        $resp = new Response();
+        $resp->code = (int)curl_getinfo($this->handle, CURLINFO_RESPONSE_CODE);
+        $resp->headers = HeadersParser::instance()->parse($headersRaw);
+        $resp->body = $body;
 
-	public function close(): void {
-		if ($this->handle) {
-			curl_close($this->handle);
-			$this->handle = NULL;
-		}
-	}
+        return $resp;
+    }
+
+    public function close(): void
+    {
+        if ($this->handle) {
+            curl_close($this->handle);
+            $this->handle = null;
+        }
+    }
 
 }

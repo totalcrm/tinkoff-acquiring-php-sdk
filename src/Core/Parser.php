@@ -2,8 +2,11 @@
 
 namespace TotalCRM\TinkoffAcquiring\Core;
 
-interface Parser {
-
-	public function parse($raw);
-
+interface Parser
+{
+    /**
+     * @param $raw
+     * @return mixed
+     */
+    public function parse($raw);
 }
