@@ -7,6 +7,7 @@ class MerchantService
     public const API_URL = 'https://securepay.tinkoff.ru/v2/';
     public const INIT_URL = 'https://securepay.tinkoff.ru/v2/Init/';
     public const CHARGE_URL = 'https://securepay.tinkoff.ru/v2/Charge/';
+    public const RESEND_URL = 'https://securepay.tinkoff.ru/v2/Resend';
 
     protected ?string $terminalKey = '';
     protected ?string $password = '';
@@ -480,4 +481,14 @@ class MerchantService
         $this->order = array();
     }
 
+    /**
+     * @return array|bool
+     */
+    public function resendPayment()
+    {
+        $params['TerminalKey'] = $this->terminalKey;
+        $params['Token'] = $this->auth($params);
+
+        return $this->sendRequest(self::RESEND_URL, $params);
+    }
 }
