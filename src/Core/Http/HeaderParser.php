@@ -2,26 +2,41 @@
 
 namespace TotalCRM\TinkoffAcquiring\Core\Http;
 
-class HeaderParser {
+use Exception;
+use RuntimeException;
 
-	private static ?self $instance = NULL;
+class HeaderParser
+{
 
-	private function __construct() {}
+    private static ?self $instance = null;
 
-	public static function instance(): self {
-		if (!self::$instance)
-			self::$instance = new self();
+    private function __construct()
+    {
+    }
 
-		return self::$instance;
-	}
+    public static function instance(): self
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
 
-	public function parse(string $headerRaw): Header {
-		$headerChunks = explode(":", $headerRaw, 2);
+        return self::$instance;
+    }
 
-		if (count($headerChunks) !== 2)
-			throw new \Exception('wrong $headerRaw: ' . $headerRaw);
+    /**
+     * @param string $headerRaw
+     * @return Header
+     * @throws Exception
+     */
+    public function parse(string $headerRaw): Header
+    {
+        $headerChunks = explode(":", $headerRaw, 2);
 
-		return new Header($headerChunks[0], $headerChunks[1]);
-	}
+        if (count($headerChunks) !== 2) {
+            throw new RuntimeException('wrong $headerRaw: ' . $headerRaw);
+        }
+
+        return new Header($headerChunks[0], $headerChunks[1]);
+    }
 
 }

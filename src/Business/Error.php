@@ -4,17 +4,26 @@ namespace TotalCRM\TinkoffAcquiring\Business;
 
 use TotalCRM\TinkoffAcquiring\Core\Http\Response;
 use TotalCRM\TinkoffAcquiring\Core\Service;
+use Exception;
 use Throwable;
 
-class Error extends \Exception {
+class Error extends Exception
+{
 
-	public function __construct(string $message = "", int $code = 0, Throwable $previous = null){
-		parent::__construct($message, $code, $previous);
-	}
+    public int $statusCode;
+    public ?string $xRequestId = null;
+    public ?string $id = null;
+    public ?array $details = null;
 
-	public int $statusCode;
-	public ?string $xRequestId = NULL;
-	public ?string $id = NULL;
-	public ?array $details = NULL;
+    /**
+     * Error constructor.
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
+     */
+    public function __construct(string $message = "", int $code = 0, Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
 
 }

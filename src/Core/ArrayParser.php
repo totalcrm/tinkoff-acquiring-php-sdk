@@ -2,24 +2,41 @@
 
 namespace TotalCRM\TinkoffAcquiring\Core;
 
-class ArrayParser implements Parser {
+use Exception;
+use RuntimeException;
 
-	private Parser $itemParser;
+class ArrayParser implements Parser
+{
 
-	public function __construct(Parser $itemParser) {
-		$this->itemParser = $itemParser;
-	}
+    private Parser $itemParser;
 
-	public function parse($raw) {
-		$data = [];
+    /**
+     * ArrayParser constructor.
+     * @param Parser $itemParser
+     */
+    public function __construct(Parser $itemParser)
+    {
+        $this->itemParser = $itemParser;
+    }
 
-		if (!is_array($raw))
-			throw new \Exception('wrong array: ' . json_encode($raw));
+    /**
+     * @param array|null $raw
+     * @return array
+     * @throws Exception
+     */
+    public function parse($raw): ?array
+    {
+        $result = [];
 
-		foreach ($raw as $item)
-			$data[] = $this->itemParser->parse($item);
+        if (!is_array($raw)) {
+            throw new RuntimeException('wrong array: ' . json_encode($raw, JSON_THROW_ON_ERROR));
+        }
 
-		return $data;
-	}
+        foreach ($raw as $item) {
+            $result[] = $this->itemParser->parse($item);
+        }
+
+        return $result;
+    }
 
 }

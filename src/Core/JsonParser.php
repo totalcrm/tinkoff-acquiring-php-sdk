@@ -2,31 +2,48 @@
 
 namespace TotalCRM\TinkoffAcquiring\Core;
 
-class JsonParser implements Parser {
+use Exception;
+use RuntimeException;
 
-	private static ?self $instance = NULL;
+class JsonParser implements Parser
+{
 
-	private function __construct() {}
+    private static ?self $instance = null;
 
-	public static function instance(): self {
-		if (!self::$instance)
-			self::$instance = new self();
+    private function __construct()
+    {
+    }
 
-		return self::$instance;
-	}
+    public static function instance(): self
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
 
-	public function parse($raw) {
-		$decoded = NULL;
+        return self::$instance;
+    }
 
-		if (is_string($raw))
-			$decoded = json_decode($raw);
-		else
-			$decoded = $raw;
+    /**
+     * @param string|array|null $raw
+     * @return array|null
+     * @throws Exception
+     */
+    public function parse($raw): ?array
+    {
 
-		if (is_null($decoded))
-			throw new \Exception('wrong json: ' . $raw);
+        $decoded = null;
 
-		return $decoded;
-	}
+        if (is_string($raw)) {
+            $decoded = json_decode($raw, false, 512, JSON_THROW_ON_ERROR);
+        } else {
+            $decoded = $raw;
+        }
+
+        if (is_null($decoded)) {
+            throw new RuntimeException('wrong json: ' . $raw);
+        }
+
+        return $decoded;
+    }
 
 }

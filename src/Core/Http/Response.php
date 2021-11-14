@@ -2,14 +2,16 @@
 
 namespace TotalCRM\TinkoffAcquiring\Core\Http;
 
-class Response {
+class Response
+{
 
-	public int $code;
-	public Headers $headers;
-	public string $body;
+    public int $code;
+    public Headers $headers;
+    public string $body;
 
-	public function __destruct(){
-		unset($this->headers);
-	}
+    public function __destruct()
+    {
+        unset($this->headers);
+    }
 
 }
